@@ -1,0 +1,57 @@
+@defer(when user()){
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+  </div>
+
+  <div class="profile-content">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <div mat-card-avatar class="user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <mat-card-title>{{ user()?.firstName + ' ' + user()?.lastName }}</mat-card-title>
+        <mat-card-subtitle>{{ user()?.username }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="stats-section">
+          <div class="stat-item">
+            <span class="stat-value">{{ bookingCount() }}</span>
+            <span class="stat-label">Bookings</span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="actions-list">
+          <button mat-button class="action-item" routerLink="/bookings">
+            <mat-icon>airplane_ticket</mat-icon>
+            <span>My Bookings</span>
+            <mat-icon class="arrow">chevron_right</mat-icon>
+          </button>
+
+          <button mat-button class="action-item">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+            <mat-icon class="arrow">chevron_right</mat-icon>
+          </button>
+
+          <button mat-button class="action-item">
+            <mat-icon>help</mat-icon>
+            <span>Help & Support</span>
+            <mat-icon class="arrow">chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-stroked-button color="warn" class="logout-btn" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Sign Out
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+}@placeholder{ loading... }

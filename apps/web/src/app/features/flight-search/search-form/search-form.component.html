@@ -1,0 +1,36 @@
+<div class="search-container">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-form">
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-label>From</mat-label>
+            <mat-icon matPrefix>flight_takeoff</mat-icon>
+            <input matInput formControlName="origin" placeholder="Origin City">
+            <mat-error *ngIf="searchForm.get('origin')?.hasError('required')">
+                Origin is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-label>To</mat-label>
+            <mat-icon matPrefix>flight_land</mat-icon>
+            <input matInput formControlName="destination" placeholder="Destination City">
+            <mat-error *ngIf="searchForm.get('destination')?.hasError('required')">
+                Destination is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="searchForm.get('date')?.hasError('required')">
+                Date is required
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" [disabled]="searchForm.invalid" class="search-btn">
+            <mat-icon>search</mat-icon>
+            Search Flights
+        </button>
+    </form>
+</div>

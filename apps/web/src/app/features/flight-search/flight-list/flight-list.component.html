@@ -1,0 +1,24 @@
+<div class="page-container">
+    <div class="hero-section">
+        <h1>Find Your Perfect Flight</h1>
+        <p>Explore the world with our premium flight booking service</p>
+    </div>
+
+    <app-search-form (search)="onSearch($event)"></app-search-form>
+
+    <div class="results-container">
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading()"></mat-progress-bar>
+
+        <div class="flights-grid" *ngIf="!isLoading() && flights().length > 0">
+            <h2 class="results-title">Available Flights</h2>
+            <app-flight-card *ngFor="let flight of flights()" [flight]="flight" (select)="onSelectFlight($event)">
+            </app-flight-card>
+        </div>
+
+        <div class="no-results" *ngIf="!isLoading() && hasSearched() && flights().length === 0">
+            <mat-icon>flight_off</mat-icon>
+            <h3>No flights found</h3>
+            <p>Try adjusting your search criteria</p>
+        </div>
+    </div>
+</div>

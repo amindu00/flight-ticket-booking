@@ -1,0 +1,87 @@
+.bookings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 2rem;
+    }
+}
+
+.booking-card {
+    margin-bottom: 1.5rem;
+
+    mat-card-header {
+        margin-bottom: 1rem;
+        position: relative;
+
+        .status-chip {
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            mat-chip {
+                &.confirmed {
+                    background-color: #d1fae5;
+                    color: #065f46;
+                }
+
+                &.cancelled {
+                    background-color: #fee2e2;
+                    color: #991b1b;
+                }
+            }
+        }
+    }
+
+    .flight-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+
+        .info-row {
+            display: flex;
+            flex-direction: column;
+
+            .label {
+                font-size: 0.875rem;
+                color: #6b7280;
+                margin-bottom: 0.25rem;
+            }
+
+            .value {
+                font-weight: 500;
+                color: #111827;
+            }
+        }
+    }
+}
+
+.no-bookings {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6b7280;
+
+    mat-icon {
+        font-size: 4rem;
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1rem;
+        color: #d1d5db;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        margin-bottom: 1.5rem;
+    }
+}

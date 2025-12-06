@@ -1,0 +1,54 @@
+<div class="bookings-container">
+    <h1>My Bookings</h1>
+
+    <div class="bookings-list" *ngIf="bookings().length > 0; else noBookings">
+        <mat-card *ngFor="let booking of bookings()" class="booking-card">
+            <mat-card-header>
+                <mat-card-title>{{ booking.flight.origin }} to {{ booking.flight.destination }}</mat-card-title>
+                <mat-card-subtitle>
+                    Booked on {{ booking.bookingDate | date:'mediumDate' }}
+                </mat-card-subtitle>
+                <div class="status-chip">
+                    <mat-chip [class.cancelled]="booking.status === 'cancelled'"
+                        [class.confirmed]="booking.status === 'confirmed'">
+                        {{ booking.status | titlecase }}
+                    </mat-chip>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div class="flight-details">
+                    <div class="info-row">
+                        <span class="label">Airline:</span>
+                        <span class="value">{{ booking.flight.airline }} ({{ booking.flight.flightNumber }})</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Departure:</span>
+                        <span class="value">{{ booking.flight.departureTime | date:'short' }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Arrival:</span>
+                        <span class="value">{{ booking.flight.arrivalTime | date:'short' }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Price:</span>
+                        <span class="value">{{ booking.flight.price | currency }}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions align="end" *ngIf="booking.status === 'confirmed'">
+                <button mat-button color="warn" (click)="cancelBooking(booking.id)">Cancel Booking</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <ng-template #noBookings>
+        <div class="no-bookings">
+            <mat-icon>airplane_ticket</mat-icon>
+            <h3>No bookings found</h3>
+            <p>You haven't booked any flights yet.</p>
+            <button mat-flat-button color="primary" routerLink="/flight-search">Search Flights</button>
+        </div>
+    </ng-template>
+</div>

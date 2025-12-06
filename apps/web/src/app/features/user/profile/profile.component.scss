@@ -1,0 +1,113 @@
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.profile-header {
+    margin-bottom: 2rem;
+    text-align: center;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+    }
+}
+
+.profile-card {
+    mat-card-header {
+        margin-bottom: 2rem;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            margin-right: 0; // Override default margin
+
+            mat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 40px;
+            }
+        }
+
+        mat-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .stats-section {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 2rem;
+
+            .stat-value {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #2563eb;
+            }
+
+            .stat-label {
+                font-size: 0.875rem;
+                color: #6b7280;
+            }
+        }
+    }
+
+    .actions-list {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 0;
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            font-weight: 500;
+            color: #374151;
+
+            mat-icon {
+                margin-right: 1rem;
+                color: #6b7280;
+
+                &.arrow {
+                    margin-right: 0;
+                    margin-left: auto;
+                }
+            }
+
+            &:hover {
+                background-color: #f9fafb;
+            }
+        }
+    }
+
+    mat-card-actions {
+        padding: 1rem;
+        justify-content: center;
+
+        .logout-btn {
+            width: 100%;
+        }
+    }
+}

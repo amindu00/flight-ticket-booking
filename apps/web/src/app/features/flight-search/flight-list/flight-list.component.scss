@@ -1,0 +1,55 @@
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #111827;
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+    }
+
+    p {
+        font-size: 1.25rem;
+        color: #6b7280;
+    }
+}
+
+.results-container {
+    margin-top: 2rem;
+}
+
+.results-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1.5rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6b7280;
+
+    mat-icon {
+        font-size: 4rem;
+        width: 4rem;
+        height: 4rem;
+        margin-bottom: 1rem;
+        color: #d1d5db;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.5rem;
+    }
+}

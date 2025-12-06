@@ -1,0 +1,193 @@
+.details-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    h1 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #111827;
+    }
+}
+
+.main-card {
+    padding: 1rem;
+
+    mat-card-header {
+        margin-bottom: 2rem;
+        position: relative;
+
+        .airline-avatar {
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+        }
+
+        .price-tag {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2563eb;
+        }
+    }
+
+    .route-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+
+        .point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            .time {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #111827;
+            }
+
+            .date {
+                font-size: 0.875rem;
+                color: #6b7280;
+            }
+
+            .city {
+                font-size: 1.125rem;
+                font-weight: 600;
+                color: #374151;
+                margin-top: 0.25rem;
+            }
+        }
+
+        .path {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 2rem;
+
+            .duration {
+                font-size: 0.875rem;
+                color: #6b7280;
+                margin-bottom: 0.5rem;
+            }
+
+            .line-container {
+                position: relative;
+                width: 100%;
+                height: 24px;
+                display: flex;
+                align-items: center;
+
+                .line {
+                    width: 100%;
+                    height: 2px;
+                    background-color: #d1d5db;
+                }
+
+                .plane-icon {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%) rotate(90deg);
+                    color: #2563eb;
+                    background: white;
+                }
+            }
+
+            .stops {
+                font-size: 0.875rem;
+                color: #6b7280;
+                margin-top: 0.5rem;
+            }
+        }
+    }
+
+    .additional-info {
+        margin-top: 2rem;
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+
+            .info-item {
+                display: flex;
+                flex-direction: column;
+
+                .label {
+                    font-size: 0.875rem;
+                    color: #6b7280;
+                    margin-bottom: 0.25rem;
+                }
+
+                .value {
+                    font-weight: 500;
+                    color: #111827;
+                }
+            }
+        }
+    }
+
+    mat-card-actions {
+        padding: 1rem 0 0;
+        gap: 1rem;
+    }
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    color: #6b7280;
+}
+
+@media (max-width: 600px) {
+    .main-card {
+        mat-card-header {
+            .price-tag {
+                position: static;
+                margin-top: 1rem;
+                text-align: right;
+            }
+        }
+
+        .route-details {
+            flex-direction: column;
+            gap: 2rem;
+
+            .path {
+                width: 100%;
+                transform: rotate(90deg);
+                padding: 0;
+
+                .plane-icon {
+                    transform: translateX(-50%);
+                }
+            }
+        }
+    }
+}
