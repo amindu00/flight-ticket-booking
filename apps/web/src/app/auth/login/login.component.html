@@ -8,24 +8,13 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="form-group full-width">
         <mat-label>Username</mat-label>
-        <input
-          matInput
-          id="username"
-          formControlName="username"
-          placeholder="Enter your username"
-        />
+        <input matInput id="username" formControlName="username" placeholder="Enter your username" />
         <mat-error> Username is required </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="form-group full-width">
         <mat-label>Password</mat-label>
-        <input
-          matInput
-          type="password"
-          id="password"
-          formControlName="password"
-          placeholder="Enter your password"
-        />
+        <input matInput type="password" id="password" formControlName="password" placeholder="Enter your password" />
         <mat-error>
           @if(loginForm.get('password')?.errors?.['required']){ Password is required }
           @if(loginForm.get('password')?.errors?.['minlength']){ Password must be at least 6
@@ -38,9 +27,9 @@
         {{ error }}
       </div>
       }
-      
-      <button matButton="filled" type="submit" [disabled]="loginForm.invalid || isLoading" class="submit-btn">
-        @if(isLoading){ Signing in... }@else{ Sign In}     
+
+      <button matButton="filled" type="submit" [disabled]="loginForm.invalid || isLoading" class="full-width">
+        @if(isLoading){ Signing in... }@else{ Sign In}
       </button>
 
       <div class="auth-footer">

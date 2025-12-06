@@ -1,18 +1,16 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
     selector: 'app-search-form',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -25,11 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrls: ['./search-form.component.scss']
 })
 export class SearchFormComponent {
-    @Output() search = new EventEmitter<{ origin: string, destination: string, date: Date }>();
+    search = output<{ origin: string, destination: string, date: Date }>();
 
-    private fb = inject(FormBuilder);
-
-    searchForm = this.fb.group({
+    searchForm = inject(FormBuilder).group({
         origin: ['', Validators.required],
         destination: ['', Validators.required],
         date: [new Date(), Validators.required]

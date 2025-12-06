@@ -9,7 +9,8 @@
     margin-bottom: 3rem;
 
     h1 {
-        font-size: 3rem;
+        /* Responsive headline sizing for mobile */
+        font-size: clamp(1.6rem, 6vw, 3rem);
         font-weight: 800;
         color: #111827;
         margin-bottom: 1rem;
@@ -17,9 +18,15 @@
     }
 
     p {
-        font-size: 1.25rem;
+        font-size: clamp(0.95rem, 2.6vw, 1.25rem);
         color: #6b7280;
     }
+}
+
+@media (max-width: 600px) {
+    .page-container { padding: 1.25rem 0.75rem }
+    .hero-section { margin-bottom: 1.5rem }
+    .hero-section h1 { margin-bottom: 0.5rem }
 }
 
 .results-container {
