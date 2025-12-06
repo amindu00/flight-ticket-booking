@@ -18,8 +18,8 @@ import { UsersService } from 'src/users/users.service';
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private usersService: UsersService
-  ) { }
+    private usersService: UsersService,
+  ) {}
 
   @Public()
   @HttpCode(HttpStatus.OK)
@@ -44,7 +44,6 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Get('profile')
   getProfile(@Request() req) {
-    console.log(req);
     return this.usersService.findOne(req.user.sub);
   }
 }

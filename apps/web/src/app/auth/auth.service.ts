@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../shared/models/user.model';
 import { Router } from '@angular/router';
 import { tap, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl = environment.apiEndpoint +'auth';
   private http = inject(HttpClient);
 
   // Signal to hold the current user

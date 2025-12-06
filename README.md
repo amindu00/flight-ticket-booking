@@ -26,6 +26,15 @@ PostgreSQL Requirement: Ensure you have a PostgreSQL database running on localho
 Install Dependencies:
 npm install
 
+Add Environment Variables:
+    JWT_SECRET=
+    PORT=
+    DB_PORT=
+    DB_HOST=
+    DB_USER=
+    DB_PASSWORD=
+    DB_NAME=
+
 Run the Web Application:
 npm run web
 Navigate to http://localhost:4200
