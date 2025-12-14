@@ -14,16 +14,16 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signIn(
     username: string,
     password: string,
   ): Promise<{ access_token: string }> {
     const user = await this.usersService.findOneByUsername(username);
-    if (!user?.password) throw new NotFoundException();
+    if (!user?.hash) throw new NotFoundException();
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.hash);
 
     if (!isMatch) throw new UnauthorizedException();
 
@@ -42,7 +42,7 @@ export class AuthService {
     const hash = await bcrypt.hash(password, this.saltOrRounds);
     const user = await this.usersService.create({
       username,
-      password: hash,
+      hash,
       firstName,
       lastName,
     });

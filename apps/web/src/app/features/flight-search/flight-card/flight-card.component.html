@@ -1,45 +1,45 @@
 <mat-card class="flight-card">
-    <mat-card-content>
-        <div class="flight-info">
-            <div class="airline-info">
-                <div class="airline-logo">
-                    <!-- Placeholder for airline logo -->
-                    <mat-icon>flight</mat-icon>
-                </div>
-                <div class="airline-details">
-                    <span class="airline-name">{{ flight.airline }}</span>
-                    <span class="flight-number">{{ flight.flightNumber }}</span>
-                </div>
-            </div>
-
-            <div class="route-info">
-                <div class="departure">
-                    <span class="time">{{ flight.departureTime | date:'shortTime' }}</span>
-                    <span class="airport">{{ flight.origin }}</span>
-                </div>
-
-                <div class="duration-info">
-                    <span class="duration">{{ flight.duration }}</span>
-                    <div class="route-line">
-                        <span class="dot"></span>
-                        <span class="line"></span>
-                        <span class="dot"></span>
-                    </div>
-                    <span class="stops">{{ flight.stops === 0 ? 'Non-stop' : flight.stops + ' stop(s)' }}</span>
-                </div>
-
-                <div class="arrival">
-                    <span class="time">{{ flight.arrivalTime | date:'shortTime' }}</span>
-                    <span class="airport">{{ flight.destination }}</span>
-                </div>
-            </div>
-
-            <div class="price-info">
-                <span class="price">{{ flight.price | currency }}</span>
-                <button mat-flat-button color="primary" (click)="select.emit(flight)">
-                    Select
-                </button>
-            </div>
+  <mat-card-content>
+    <div class="flight-info">
+      <div class="airline-info">
+        <div class="airline-logo">
+          <!-- Placeholder for airline logo -->
+          <mat-icon>flight</mat-icon>
         </div>
-    </mat-card-content>
+        <div class="airline-details">
+          <span class="airline-name">{{ flight.plane.airline }}</span>
+          <span class="flight-number">{{ flight.code }}</span>
+        </div>
+      </div>
+
+      <div class="route-info">
+        <div class="departure">
+          <span class="time">{{ flight.departureTime | date: 'shortTime' }}</span>
+          <span class="airport">{{ flight.departureAirport.name }}</span>
+        </div>
+
+        <div class="duration-info">
+          <!-- <span class="duration">{{ flight.duration }}</span> -->
+          <div class="route-line">
+            <span class="dot"></span>
+            <span class="line"></span>
+            <span class="dot"></span>
+          </div>
+          <!-- <span class="stops">
+            {{ flight.stops === 0 ? 'Non-stop' : flight.stops + ' stop(s)' }}
+          </span> -->
+        </div>
+
+        <div class="arrival">
+          <span class="time">{{ flight.arrivalTime | date: 'shortTime' }}</span>
+          <span class="airport">{{ flight.departureAirport.name }}</span>
+        </div>
+      </div>
+
+      <div class="price-info">
+        <!-- <span class="price">{{ flight.price | currency }}</span> -->
+        <button mat-flat-button color="primary" (click)="select.emit(flight)">Select</button>
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>

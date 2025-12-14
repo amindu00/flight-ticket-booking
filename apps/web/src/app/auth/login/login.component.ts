@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import {  RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -31,14 +31,8 @@ export class LoginComponent {
       const { username, password } = this.loginForm.value;
 
       this.authService.login(username!, password!).subscribe({
-        next: () => {
-          this.isLoading = false;
-          // Navigation handled in service
-        },
-        error: (err) => {
-          this.isLoading = false;
-          this.error = 'Invalid email or password';
-        },
+        error: () => (this.error = 'Invalid username or password'),
+        complete: () => (this.isLoading = false),
       });
     } else {
       this.loginForm.markAllAsTouched();

@@ -29,6 +29,7 @@ export class UsersService {
 
     async create(user: Partial<User>): Promise<User> {
         const newUser = this.usersRepository.create(user);
-        return this.usersRepository.save(newUser);
+        const savedUser = await this.usersRepository.save(newUser);
+        return savedUser;
     }
 }

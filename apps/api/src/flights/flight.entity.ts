@@ -1,37 +1,36 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Airport } from '../airports/airport.entity';
+import { Plane } from '../planes/plane.entity';
 
 @Entity()
 export class Flight {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    airline: string;
+    @Column({ unique: true })
+    code: string;
+
+    @ManyToOne(() => Plane, (plane) => plane.id)
+    plane: Plane;
 
     @Column()
-    flightNumber: string;
+    planeId: number;
+
+    @ManyToOne(() => Airport, (airport) => airport.id)
+    departureAirport: Airport;
+
+    @Column()
+    departureAirportId: number;
+
+    @ManyToOne(() => Airport, (airport) => airport.id)
+    arrivalAirport: Airport;
+
+    @Column()
+    arrivalAirportId: number;
 
     @Column()
     departureTime: Date;
 
     @Column()
     arrivalTime: Date;
-
-    @Column()
-    origin: string;
-
-    @Column()
-    destination: string;
-
-    @Column()
-    price: number;
-
-    @Column()
-    duration: string;
-
-    @Column()
-    stops: number;
-
-    @Column()
-    availableSeats: number;
 }

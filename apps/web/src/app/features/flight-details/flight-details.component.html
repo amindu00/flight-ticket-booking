@@ -1,81 +1,152 @@
-<div class="details-container" *ngIf="!isLoading(); else loading">
+@if (isLoading()) {
+  <div class="loading-container">
+    <p>Loading flight details...</p>
+  </div>
+} @else {
+  <div class="details-container">
     <div class="header">
-        <button mat-icon-button (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-        </button>
-        <h1>Flight Details</h1>
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>Flight Details</h1>
     </div>
 
-    <div class="content" *ngIf="flight() as f">
+    @if (flight()) {
+      <div class="content">
         <mat-card class="main-card">
-            <mat-card-header>
-                <div mat-card-avatar class="airline-avatar">
-                    <mat-icon>flight</mat-icon>
+          <mat-card-header>
+            <div mat-card-avatar class="airline-avatar">
+              <mat-icon>flight</mat-icon>
+            </div>
+            <mat-card-title>{{ flight()?.plane?.airline }}</mat-card-title>
+            <mat-card-subtitle>{{ flight()?.code }}</mat-card-subtitle>
+            <!-- <div class="price-tag">{{ flight()?.price | currency }}</div> -->
+          </mat-card-header>
+
+          <mat-card-actions align="end">
+            <button mat-stroked-button (click)="goBack()">Cancel</button>
+          </mat-card-actions>
+
+          <mat-card-content>
+            <div class="route-details">
+              <div class="point">
+                <span class="time">{{ flight()?.departureTime | date: 'shortTime' }}</span>
+                <span class="date">{{ flight()?.departureTime | date: 'mediumDate' }}</span>
+                <span class="city">{{ flight()?.departureAirport?.name }}</span>
+              </div>
+
+              <div class="path">
+                <!-- <span class="duration">{{ flight()?.duration }}</span> -->
+                <div class="line-container">
+                  <div class="line"></div>
+                  <mat-icon class="plane-icon">flight_takeoff</mat-icon>
                 </div>
-                <mat-card-title>{{ f.airline }}</mat-card-title>
-                <mat-card-subtitle>{{ f.flightNumber }}</mat-card-subtitle>
-                <div class="price-tag">{{ f.price | currency }}</div>
-            </mat-card-header>
+              </div>
 
-            <mat-card-content>
-                <div class="route-details">
-                    <div class="point">
-                        <span class="time">{{ f.departureTime | date:'shortTime' }}</span>
-                        <span class="date">{{ f.departureTime | date:'mediumDate' }}</span>
-                        <span class="city">{{ f.origin }}</span>
-                    </div>
+              <div class="point">
+                <span class="time">{{ flight()?.arrivalTime | date: 'shortTime' }}</span>
+                <span class="date">{{ flight()?.arrivalTime | date: 'mediumDate' }}</span>
+                <span class="city">{{ flight()?.arrivalAirport?.name }}</span>
+              </div>
+            </div>
 
-                    <div class="path">
-                        <span class="duration">{{ f.duration }}</span>
-                        <div class="line-container">
-                            <div class="line"></div>
-                            <mat-icon class="plane-icon">flight_takeoff</mat-icon>
-                        </div>
-                        <span class="stops">{{ f.stops === 0 ? 'Non-stop' : f.stops + ' stop(s)' }}</span>
-                    </div>
+            <mat-divider></mat-divider>
 
-                    <div class="point">
-                        <span class="time">{{ f.arrivalTime | date:'shortTime' }}</span>
-                        <span class="date">{{ f.arrivalTime | date:'mediumDate' }}</span>
-                        <span class="city">{{ f.destination }}</span>
-                    </div>
+            <div class="additional-info">
+              <h3>Flight Information</h3>
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="label">Class</span>
+                  <span class="value">Economy</span>
                 </div>
-
-                <mat-divider></mat-divider>
-
-                <div class="additional-info">
-                    <h3>Flight Information</h3>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <span class="label">Class</span>
-                            <span class="value">Economy</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">Aircraft</span>
-                            <span class="value">Boeing 737-800</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">Baggage</span>
-                            <span class="value">20kg Check-in</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">Seat Pitch</span>
-                            <span class="value">30 inches</span>
-                        </div>
-                    </div>
+                <div class="info-item">
+                  <span class="label">Aircraft</span>
+                  <span class="value">Boeing 737-800</span>
                 </div>
-            </mat-card-content>
+                <div class="info-item">
+                  <span class="label">Baggage</span>
+                  <span class="value">20kg Check-in</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Seat Pitch</span>
+                  <span class="value">30 inches</span>
+                </div>
+              </div>
+            </div>
 
-            <mat-card-actions align="end">
-                <button mat-stroked-button (click)="goBack()">Cancel</button>
-                <button mat-flat-button color="primary" (click)="bookFlight()">Book Now</button>
-            </mat-card-actions>
+            <mat-divider class="spacer"></mat-divider>
+
+            <div class="booking-section">
+              <h3>Passenger Details</h3>
+
+              <div class="passport-check" *ngIf="!showPassengerForm() && !passengerFound()">
+                <mat-form-field class="full-width">
+                  <mat-label>Passport ID</mat-label>
+                  <input matInput [formControl]="passportControl" placeholder="Enter Passport ID" />
+                  <mat-error> Passport ID is required </mat-error>
+                </mat-form-field>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  (click)="checkPassenger()"
+                  [disabled]="passportControl.invalid || isBooking()"
+                >
+                  <mat-spinner diameter="20" *ngIf="isBooking()" />
+                  <span *ngIf="!isBooking()">Continue</span>
+                </button>
+              </div>
+
+              <div class="passenger-form" *ngIf="showPassengerForm()">
+                <p class="info-text">Passenger not found. Please enter details.</p>
+                <form [formGroup]="passengerForm" (ngSubmit)="submitPassenger()">
+                  <div class="form-row">
+                    <mat-form-field>
+                      <mat-label>First Name</mat-label>
+                      <input matInput formControlName="firstName" />
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Last Name</mat-label>
+                      <input matInput formControlName="lastName" />
+                    </mat-form-field>
+                  </div>
+                  <mat-form-field class="full-width">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput type="date" formControlName="dateOfBirth" />
+                  </mat-form-field>
+
+                  <div class="form-actions">
+                    <button mat-button (click)="showPassengerForm.set(false)">Cancel</button>
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      type="submit"
+                      [disabled]="passengerForm.invalid || isBooking()"
+                    >
+                      <mat-spinner diameter="20" *ngIf="isBooking()"></mat-spinner>
+                      <span *ngIf="!isBooking()">Book Flight</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              @if (passengerFound()) {
+                <div class="passenger-found">
+                  <div class="success-message">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>
+                      Passenger verified: {{ passengerFound()?.firstName }}
+                      {{ passengerFound()?.lastName }}
+                    </span>
+                  </div>
+                  @if (isBooking()) {
+                    <mat-progress-spinner mode="indeterminate" diameter="30" />
+                  }
+                </div>
+              }
+            </div>
+          </mat-card-content>
         </mat-card>
-    </div>
-</div>
-
-<ng-template #loading>
-    <div class="loading-container">
-        <p>Loading flight details...</p>
-    </div>
-</ng-template>
+      </div>
+    }
+  </div>
+}

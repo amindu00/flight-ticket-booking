@@ -34,9 +34,9 @@ export class ProfileComponent implements OnInit {
         const currentUser = this.authService.currentUser();
         if (currentUser) {
             this.user.set(currentUser);
-            this.bookingService.loadBookings();
-            const bookings = this.bookingService.getUserBookings();
-            this.bookingCount.set(bookings.length);
+            this.bookingService.getBookings().subscribe((bookings) => {
+                this.bookingCount.set(bookings.length);
+            });
         } else {
             this.router.navigate(['/auth/login']);
         }

@@ -5,6 +5,9 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { FlightsModule } from './flights/flights.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { AirportsModule } from './airports/airports.module';
+import { PlanesModule } from './planes/planes.module';
+import { PassengersModule } from './passengers/passengers.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -17,7 +20,6 @@ import { join } from 'path';
       isGlobal: true,
       cache: true,
     }),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '..', 'dist', 'web', 'browser'),
     }),
@@ -35,6 +37,9 @@ import { join } from 'path';
     UsersModule,
     FlightsModule,
     BookingsModule,
+    AirportsModule,
+    PlanesModule,
+    PassengersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

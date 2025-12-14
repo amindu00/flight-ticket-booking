@@ -1,56 +1,86 @@
 import { NestFactory } from '@nestjs/core';
+import { DataSource } from 'typeorm';
+import { Airport } from './airports/airport.entity';
 import { AppModule } from './app.module';
-import { FlightsService } from './flights/flights.service';
+import { CabinClass } from './common/enums';
+import { Fare } from './flights/fare.entity';
+import { FlightSeat } from './flights/flight-seat.entity';
 import { Flight } from './flights/flight.entity';
+import { PlaneSeat } from './planes/plane-seat.entity';
+import { Plane } from './planes/plane.entity';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
-  const flightsService = app.get(FlightsService);
-  // const usersService = app.get(UsersService); // We might need to add create method to UsersService
+  const dataSource = app.get(DataSource);
 
-  console.log('Seeding flights...');
-  const flights: Partial<Flight>[] = [
-    {
+  const airportRepo = dataSource.getRepository(Airport);
+  const planeRepo = dataSource.getRepository(Plane);
+  const flightRepo = dataSource.getRepository(Flight);
+  const flightSeatRepo = dataSource.getRepository(FlightSeat);
+  const planeSeatRepo = dataSource.getRepository(PlaneSeat);
+  const fareRepo = dataSource.getRepository(Fare);
+
+  console.log('Seeding database...');
+
+  // Create Airports
+  const jfk = await airportRepo.save(
+    airportRepo.create({
+      code: 'JFK',
+      name: 'John F. Kennedy International Airport',
+      city: 'New York',
+      country: 'USA',
+    }),
+  );
+
+  const lhr = await airportRepo.save(
+    airportRepo.create({
+      code: 'LHR',
+      name: 'Heathrow Airport',
+      city: 'London',
+      country: 'UK',
+    }),
+  );
+
+  // Create Plane
+  const plane = await planeRepo.save(
+    planeRepo.create({
+      code: 'TA-777',
+      name: 'Boeing 777',
       airline: 'TechAir',
-      flightNumber: 'TA101',
+    }),
+  );
+
+  const planeSeat = await planeSeatRepo.save(
+    planeSeatRepo.create({ plane, code: '1A' }),
+  );
+
+  // Create Flight
+  const flight = await flightRepo.save(
+    flightRepo.create({
+      code: 'TA101',
+      plane: plane,
+      departureAirport: jfk,
+      arrivalAirport: lhr,
       departureTime: new Date('2025-12-01T10:00:00Z'),
-      arrivalTime: new Date('2025-12-01T12:00:00Z'),
-      origin: 'New York',
-      destination: 'London',
-      price: 500,
-      duration: '7h',
-      stops: 0,
-      availableSeats: 150,
-    },
-    {
-      airline: 'TechAir',
-      flightNumber: 'TA102',
-      departureTime: new Date('2025-12-02T14:00:00Z'),
-      arrivalTime: new Date('2025-12-02T16:00:00Z'),
-      origin: 'London',
-      destination: 'New York',
-      price: 550,
-      duration: '7h 30m',
-      stops: 0,
-      availableSeats: 140,
-    },
-    {
-      airline: 'DevJet',
-      flightNumber: 'DJ202',
-      departureTime: new Date('2025-12-05T09:00:00Z'),
-      arrivalTime: new Date('2025-12-05T11:00:00Z'),
-      origin: 'San Francisco',
-      destination: 'Tokyo',
-      price: 800,
-      duration: '11h',
-      stops: 1,
-      availableSeats: 200,
-    },
-  ];
+      arrivalTime: new Date('2025-12-01T18:00:00Z'),
+    }),
+  );
 
-  for (const flight of flights) {
-    await flightsService.create(flight as Flight);
-  }
+  await fareRepo.save(
+    fareRepo.create({
+      flight,
+      class: CabinClass.ECONOMY,
+      amount: 100.0,
+    }),
+  );
+
+  // Create Flight Seats
+  await flightSeatRepo.save(
+    flightSeatRepo.create({
+      flight,
+      planeSeat,
+    }),
+  );
 
   console.log('Seeding complete!');
   await app.close();
