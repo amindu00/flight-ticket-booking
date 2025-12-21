@@ -19,7 +19,7 @@ import { join } from 'path';
       cache: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', '..', 'dist', 'web', 'browser'),
+      rootPath: join(__dirname, '..', '..', 'web', 'dist', 'browser'),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
